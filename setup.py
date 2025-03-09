@@ -1,4 +1,5 @@
 import os
+import argparse
 
 def prompt_user():
     choices = {
@@ -53,7 +54,23 @@ def create_project_structure(choices):
         print(f"- {base_dir}/{folder} ({structure[folder]})")
 
 def main():
-    user_choices = prompt_user()
+    parser = argparse.ArgumentParser(description="Generate a full-stack project structure interactively.")
+    parser.add_argument("--default", action="store_true", help="Use default technologies without prompting")
+    args = parser.parse_args()
+    
+    if args.default:
+        user_choices = {
+            "backend": "spring-boot",
+            "frontend-web": "nextjs",
+            "frontend-mobile": "react-native",
+            "frontend-desktop": "tauri"
+        }
+        print("\nUsing default technologies:")
+        for key, value in user_choices.items():
+            print(f"{key}: {value}")
+    else:
+        user_choices = prompt_user()
+    
     create_project_structure(user_choices)
 
 if __name__ == "__main__":

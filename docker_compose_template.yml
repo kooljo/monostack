@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15
+    container_name: sport-db
+    restart: always
+    environment:
+      POSTGRES_USER: sport_user
+      POSTGRES_PASSWORD: sport_pass
+      POSTGRES_DB: sport_db
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./{{backend}}
+    container_name: sport-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend-web:
+    build: ./{{frontend-web}}
+    container_name: sport-frontend-web
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  frontend-mobile:
+    build: ./{{frontend-mobile}}
+    container_name: sport-frontend-mobile
+    restart: always
+    depends_on:
+      - backend
+
+  frontend-desktop:
+    build: ./{{frontend-desktop}}
+    container_name: sport-frontend-desktop
+    restart: always
+    depends_on:
+      - backend

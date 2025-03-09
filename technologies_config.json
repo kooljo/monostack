@@ -1,0 +1,22 @@
+{
+    "backend": [
+      "spring-boot", "nestjs", "django", "express", "fastapi", "flask", "laravel", "symfony", "gin", "fiber", 
+      "rails", "phoenix", "aspnet-core", "hapi", "sails", "loopback", "ktor", "quarkus", "micronaut", "adonis", 
+      "vertx", "go-chi", "spring-cloud", "kratos", "actix", "beego", "fastify", "sanic", "blitzjs", "serverless"
+    ],
+    "frontend-web": [
+      "nextjs", "vuejs", "react", "angular", "svelte", "solidjs", "alpinejs", "preact", "ember", "backbone", 
+      "lit", "stencil", "qwik", "astro", "htmx", "marionette", "inferno", "hyperapp", "mithril", "dojo", 
+      "riot", "nuxt", "remix", "gatsby", "eleventy", "blitzjs", "redwood", "ember-fastboot", "vue-nuxt", "react-server-components"
+    ],
+    "frontend-mobile": [
+      "react-native", "flutter", "kotlin", "swift", "xamarin", "ionic", "capacitor", "cordova", "nativescript", "tizen", 
+      "maui", "jetpack-compose", "expo", "weex", "framermotion", "swt", "titanium", "j2objc", "unity-ui", "cocos2d-x", 
+      "scade", "qt", "haxe", "phonegap", "sencha-touch", "playcanvas", "monogame", "pyqt", "gluon", "kivy"
+    ],
+    "frontend-desktop": [
+      "tauri", "electron", "qt", "gtk", "wpf", "javafx", "avalonia", "wxwidgets", "chromium-embedded", "cef", 
+      "flutter-desktop", "react-native-windows", "winui", "sciter", "libui", "lvgl", "ncurses", "nana", "pyqt", "pygobject", 
+      "sfml", "godot", "tkinter", "rust-egui", "openframeworks", "directui", "cinder", "imgui", "haxeui", "photon"
+    ]
+  }

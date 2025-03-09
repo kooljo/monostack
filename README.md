@@ -1,73 +1,106 @@
 # **Monostack 🚀**
 
 ## 📌 Overview
-Monostack is a simple **CLI tool** that helps developers generate a **full-stack project structure** interactively or using default configurations. It supports multiple technologies for **backend, frontend-web, frontend-mobile, and frontend-desktop**, allowing quick setup of a scalable and modular application.
+Monostack is a **CLI tool** that helps developers generate a **full-stack project structure** interactively or using default configurations. It supports multiple technologies for **backend, frontend-web, frontend-mobile, and frontend-desktop**, allowing quick setup of a scalable and modular application. It also generates a **docker-compose.yml** file based on the selected technologies.
 
 ---
 
 ## 🏗 **Features**
 ✅ **Interactive selection of technologies** (Spring Boot, Next.js, React Native, Tauri, etc.)  
-✅ **Default mode for instant setup**  
 ✅ **Automatic project folder structure generation**  
-✅ **Modular and scalable architecture**  
+✅ **Custom `docker-compose.yml` generation**  
+✅ **Automatic installation of selected frameworks**  
+✅ **Pre-configured documentation (`docs/` and `README.md`)**  
+
+---
+
+## 🏗 Supported Technologies
+### **Backend**
+- **Java**: Spring Boot, Quarkus, Micronaut, etc.
+- **JavaScript**: NestJS, Express, Fastify, etc.
+- **PHP**: Laravel, Symfony, CodeIgniter, etc.
+- **Python**: Django, Flask, FastAPI, etc.
+- **Go**: Gin, Echo, Fiber, etc.
+- **Rust**: Actix, Axum, Rocket, etc.
+- **Ruby**: Rails, Sinatra, Hanami, etc.
+- **.NET**: ASP.NET Core, Blazor, etc.
+
+### **Frontend Web**
+- **JavaScript**: React, Next.js, Vue, Angular, Svelte, etc.
+- **Python**: Dash, Streamlit, PyScript
+- **Ruby**: Rails Stimulus, Bridgetown
+- **PHP**: Laravel Livewire, Symfony UX
+- **Dart**: Flutter Web
+- **.NET**: Blazor, ASP.NET MVC
+
+### **Frontend Mobile**
+- **JavaScript**: React Native, Expo, Ionic, Capacitor
+- **Dart**: Flutter
+- **Kotlin**: Jetpack Compose, KMM
+- **Swift**: SwiftUI, UIKit
+- **.NET**: MAUI
+- **Python**: Kivy, BeeWare
+
+### **Frontend Desktop**
+- **JavaScript**: Electron, Tauri, Neutralino.js
+- **Dart**: Flutter Desktop
+- **Kotlin**: Compose Desktop
+- **Swift**: SwiftUI, AppKit
+- **.NET**: WinUI, WPF, MAUI
+- **Python**: PyQt, Kivy, Tkinter, BeeWare
 
 ---
 
 ## 🔥 **Installation & Usage**
-
 ### **Prerequisites**
-Ensure you have **Python 3.x** installed.
+Ensure you have the following installed:
+- **Python 3+**
+- **Git**
+- **Docker & Docker Compose**
+- **Gum** (for CLI interactive selection)
 
 ### **Clone the repository**
 ```bash
-git clone https://github.com/kooljo/monostack.git
+git clone https://github.com/kooljo/monostack
 cd monostack
 ```
 
 ### **Run the CLI tool**
-
 #### 🔹 **Interactive Mode (Manual Selection)**
 ```bash
-python setup_project.py
+python setup.py
 ```
 👉 You will be prompted to choose **backend, frontend-web, frontend-mobile, and frontend-desktop** technologies.
 
-#### 🔹 **Non-Interactive Mode (Default Values)**
+#### 🔹 **Run Services with Docker Compose**
 ```bash
-python setup_project.py --default
+cd ../mono-app/infra
+docker-compose up --build -d
 ```
-👉 Uses default technologies:
-- **Backend**: Spring Boot
-- **Frontend Web**: Next.js
-- **Frontend Mobile**: React Native
-- **Frontend Desktop**: Tauri
 
 ---
 
 ## 📂 **Generated Project Structure**
 ```
-📦 sport-app
-├── 📁 backend (Spring Boot)
-│   ├── README.md
-├── 📁 frontend-web (Next.js)
-│   ├── README.md
-├── 📁 frontend-mobile (React Native)
-│   ├── README.md
-├── 📁 frontend-desktop (Tauri)
-│   ├── README.md
-├── 📁 infra (Infrastructure)
-│   ├── README.md
-├── 📁 docs (Documentation)
-│   ├── README.md
+📦 mono-app
+├── 📁 backend          # Selected backend framework (e.g., Spring Boot, Express, Laravel...)
+├── 📁 frontend-web     # Selected web framework (e.g., React, Angular, Vue...)
+├── 📁 frontend-mobile  # Selected mobile framework (e.g., React Native, Flutter...)
+├── 📁 frontend-desktop # Selected desktop framework (e.g., Electron, Tauri...)
+├── 📁 infra            # Infrastructure files (Docker, Kubernetes...)
+│   ├── docker-compose.yml
+│   └── ...
+├── 📁 docs             # Project documentation
+└── 📜 README.md
 ```
 
 ---
 
 ## 📌 Roadmap & Future Enhancements
-- [ ] **Automatic generation of `docker-compose.yml` for local deployment**
+- [ ] **Automatic database setup (PostgreSQL, MySQL, MongoDB, etc.)**
 - [ ] **Integration with Git for automatic repository setup**
-- [ ] **Support for additional frontend/backend stacks**
-- [ ] **Optional database setup (PostgreSQL, MySQL, MongoDB, etc.)**
+- [ ] **Additional frontend/backend stacks**
+- [ ] **Enhanced CLI options for advanced configurations**
 
 ---
 

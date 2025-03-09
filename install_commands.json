@@ -1,0 +1,189 @@
+{
+  "backend": {
+    "java": {
+      "spring-boot": "rm -rf {module} && mvn archetype:generate -DgroupId=com.example -DartifactId={module} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false",
+      "quarkus": "rm -rf {module} && mvn io.quarkus:quarkus-maven-plugin:create -DprojectGroupId=com.example -DprojectArtifactId={module}",
+      "micronaut": "rm -rf {module} && mn create-app {module}",
+      "vertx": "rm -rf {module} && mvn io.vertx:vertx-maven-plugin:1.0.0:setup -DprojectGroupId=com.example -DprojectArtifactId={module}",
+      "dropwizard": "rm -rf {module} && mvn archetype:generate -DgroupId=com.example -DartifactId={module} -DarchetypeArtifactId=io.dropwizard.archetypes:java-simple",
+      "play-framework": "rm -rf {module} && sbt new playframework/play-java-seed.g8",
+      "jooby": "rm -rf {module} && mvn archetype:generate -DgroupId=com.example -DartifactId={module} -DarchetypeArtifactId=jooby-archetype",
+      "jax-rs": "rm -rf {module} && mvn archetype:generate -DgroupId=com.example -DartifactId={module} -DarchetypeArtifactId=maven-archetype-webapp",
+      "grails": "rm -rf {module} && sdk install grails && grails create-app {module}",
+      "blade": "rm -rf {module} && mvn archetype:generate -DgroupId=com.example -DartifactId={module} -DarchetypeArtifactId=blade-archetype"
+    },
+    "javascript": {
+      "nestjs": "rm -rf {module} && npx @nestjs/cli new {module} --skip-git",
+      "express": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install express",
+      "hapi": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install @hapi/hapi",
+      "sails": "rm -rf {module} && npx sails new {module}",
+      "loopback": "rm -rf {module} && npx loopback-cli app {module}",
+      "adonis": "rm -rf {module} && npx @adonisjs/cli new {module} --api-only",
+      "fastify": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install fastify",
+      "blitzjs": "rm -rf {module} && npx blitz new {module}",
+      "keystone": "rm -rf {module} && npx create-keystone-app {module}",
+      "strapi": "rm -rf {module} && npx create-strapi-app {module} --quickstart"
+    },
+    "php": {
+      "laravel": "rm -rf {module} && composer create-project --prefer-dist laravel/laravel {module}",
+      "symfony": "rm -rf {module} && composer create-project symfony/skeleton {module}",
+      "cakephp": "rm -rf {module} && composer create-project --prefer-dist cakephp/app {module}",
+      "codeigniter": "rm -rf {module} && composer create-project codeigniter4/appstarter {module}",
+      "yii": "rm -rf {module} && composer create-project --prefer-dist yiisoft/yii2-app-basic {module}",
+      "laminas": "rm -rf {module} && composer create-project laminas/laminas-mvc-skeleton {module}",
+      "fuelphp": "rm -rf {module} && composer create-project fuel/fuel {module}",
+      "phalcon": "rm -rf {module} && mkdir {module} && cd {module} && composer require phalcon/devtools",
+      "slim": "rm -rf {module} && composer require slim/slim",
+      "zend": "rm -rf {module} && composer create-project zendframework/skeleton-application {module}"
+    },
+    "go": {
+      "gin": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get -u github.com/gin-gonic/gin",
+      "fiber": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get -u github.com/gofiber/fiber/v2",
+      "echo": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/labstack/echo/v4",
+      "chi": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/go-chi/chi/v5",
+      "beego": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/beego/beego/v2",
+      "kratos": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/go-kratos/kratos/v2",
+      "go-micro": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/micro/micro/v3",
+      "kit": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/go-kit/kit",
+      "buffalo": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/gobuffalo/buffalo",
+      "revel": "rm -rf {module} && mkdir {module} && cd {module} && go mod init {module} && go get github.com/revel/revel"
+    },
+    "rust": {
+      "actix-web": "rm -rf {module} && cargo new {module} && cd {module} && cargo add actix-web",
+      "axum": "rm -rf {module} && cargo new {module} && cd {module} && cargo add axum",
+      "rocket": "rm -rf {module} && cargo new {module} && cd {module} && cargo add rocket",
+      "warp": "rm -rf {module} && cargo new {module} && cd {module} && cargo add warp",
+      "tide": "rm -rf {module} && cargo new {module} && cd {module} && cargo add tide",
+      "gotham": "rm -rf {module} && cargo new {module} && cd {module} && cargo add gotham",
+      "nickel": "rm -rf {module} && cargo new {module} && cd {module} && cargo add nickel",
+      "salvo": "rm -rf {module} && cargo new {module} && cd {module} && cargo add salvo",
+      "poem": "rm -rf {module} && cargo new {module} && cd {module} && cargo add poem",
+      "tower-web": "rm -rf {module} && cargo new {module} && cd {module} && cargo add tower-web"
+    },
+    "python": {
+      "django": "rm -rf {module} && django-admin startproject {module}",
+      "flask": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install flask",
+      "fastapi": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install fastapi uvicorn",
+      "tornado": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install tornado",
+      "bottle": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install bottle",
+      "pyramid": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install pyramid",
+      "hug": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install hug",
+      "falcon": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install falcon",
+      "aiohttp": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install aiohttp",
+      "sanic": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install sanic"
+    },
+    "ruby": {
+      "rails": "rm -rf {module} && gem install rails && rails new {module}",
+      "sinatra": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add sinatra",
+      "hanami": "rm -rf {module} && gem install hanami && hanami new {module}",
+      "padrino": "rm -rf {module} && gem install padrino && padrino new {module}",
+      "grape": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add grape",
+      "cuba": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add cuba",
+      "camping": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add camping",
+      "roda": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add roda",
+      "rack": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add rack",
+      "trailblazer": "rm -rf {module} && gem install trailblazer && trailblazer new {module}"
+    },
+    ".net": {
+      "aspnet-core": "rm -rf {module} && dotnet new webapi -o {module}",
+      "blazor": "rm -rf {module} && dotnet new blazorserver -o {module}",
+      "nancy": "rm -rf {module} && dotnet new console -o {module} && cd {module} && dotnet add package Nancy",
+      "service-fabric": "rm -rf {module} && dotnet new servicefabric -o {module}",
+      "mono": "rm -rf {module} && mkdir {module} && cd {module} && dotnet new console"
+    }
+  },
+  "frontend-web": {
+    "javascript": {
+      "react": "rm -rf {module} && npx create-react-app {module} --template typescript",
+      "nextjs": "rm -rf {module} && npx create-next-app@latest {module} --ts --use-npm",
+      "vuejs": "rm -rf {module} && npm create vue@latest {module}",
+      "angular": "rm -rf {module} && npx @angular/cli new {module} --defaults",
+      "svelte": "rm -rf {module} && npx degit sveltejs/template {module} && cd {module} && npm install",
+      "solidjs": "rm -rf {module} && npx degit solidjs/templates/js {module} && cd {module} && npm install",
+      "ember": "rm -rf {module} && npx ember-cli new {module} --skip-npm",
+      "preact": "rm -rf {module} && npx preact-cli create default {module}",
+      "alpinejs": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install alpinejs"
+    },
+    "python": {
+      "dash": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install dash",
+      "streamlit": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install streamlit"
+    },
+    "ruby": {
+      "rails-stimulus": "rm -rf {module} && gem install rails && rails new {module} --webpack=stimulus",
+      "bridgetown": "rm -rf {module} && gem install bridgetown && bridgetown new {module}",
+      "sinatra": "rm -rf {module} && mkdir {module} && cd {module} && bundle init && bundle add sinatra"
+    },
+    "php": {
+      "laravel-livewire": "rm -rf {module} && composer create-project --prefer-dist laravel/laravel {module} && cd {module} && composer require livewire/livewire",
+      "symfony-ux": "rm -rf {module} && composer create-project symfony/skeleton {module} && cd {module} && composer require symfony/ux-turbo",
+      "wordpress-react": "rm -rf {module} && mkdir {module} && cd {module} && wp core download && npm install @wordpress/scripts react react-dom"
+    },
+    "dart": {
+      "flutter-web": "rm -rf {module} && flutter create {module} && cd {module} && flutter config --enable-web && flutter build web"
+    },
+    "dotnet": {
+      "blazor": "rm -rf {module} && dotnet new blazorserver -o {module}",
+      "aspnet-core-mvc": "rm -rf {module} && dotnet new mvc -o {module}"
+    }
+  },
+  "frontend-mobile": {
+    "javascript": {
+      "react-native": "rm -rf {module} && npx react-native init {module}",
+      "expo": "rm -rf {module} && npx create-expo-app {module}",
+      "ionic": "rm -rf {module} && npm install -g @ionic/cli && ionic start {module} blank",
+      "capacitor": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install @capacitor/core",
+      "cordova": "rm -rf {module} && mkdir {module} && cd {module} && cordova create {module}",
+      "nativescript": "rm -rf {module} && npx create-nx-workspace {module}",
+      "quasar": "rm -rf {module} && npm create quasar {module}"
+    },
+    "dart": {
+      "flutter": "rm -rf {module} && flutter create {module}"
+    },
+    "kotlin": {
+      "jetpack-compose": "rm -rf {module} && mkdir {module} && cd {module} && touch build.gradle.kts",
+      "kmm": "rm -rf {module} && mkdir {module} && cd {module} && touch settings.gradle.kts"
+    },
+    "swift": {
+      "swiftui": "rm -rf {module} && mkdir {module} && cd {module} && touch Package.swift",
+      "uikit": "rm -rf {module} && mkdir {module} && cd {module} && touch main.swift"
+    },
+    "dotnet": {
+      "maui": "rm -rf {module} && dotnet new maui -o {module}"
+    },
+    "python": {
+      "kivy": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install kivy",
+      "beeware": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install briefcase"
+    }
+  },
+  "frontend-desktop": {
+    "javascript": {
+      "electron": "rm -rf {module} && npx create-electron-app {module}",
+      "tauri": "rm -rf {module} && cargo install create-tauri-app && create-tauri-app {module}",
+      "neutralino": "rm -rf {module} && npx @neutralinojs/neu create {module}",
+      "proton-native": "rm -rf {module} && npx create-proton-native-app {module}",
+      "nw.js": "rm -rf {module} && mkdir {module} && cd {module} && npm init -y && npm install nw"
+    },
+    "dart": {
+      "flutter-desktop": "rm -rf {module} && flutter create {module} && cd {module} && flutter config --enable-linux-desktop --enable-macos-desktop --enable-windows-desktop && flutter build"
+    },
+    "kotlin": {
+      "compose-desktop": "rm -rf {module} && mkdir {module} && cd {module} && touch build.gradle.kts"
+    },
+    "swift": {
+      "swiftui": "rm -rf {module} && mkdir {module} && cd {module} && touch Package.swift",
+      "appkit": "rm -rf {module} && mkdir {module} && cd {module} && touch main.swift"
+    },
+    "dotnet": {
+      "winui": "rm -rf {module} && dotnet new winui -o {module}",
+      "wpf": "rm -rf {module} && dotnet new wpf -o {module}",
+      "maui": "rm -rf {module} && dotnet new maui -o {module}"
+    },
+    "python": {
+      "pyqt": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install pyqt5",
+      "kivy": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install kivy",
+      "tkinter": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && touch main.py",
+      "pyside": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install pyside2",
+      "beeware": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install briefcase"
+    }
+  }
+}

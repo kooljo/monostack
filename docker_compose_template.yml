@@ -33,11 +33,11 @@ services:
       - backend
 
   database:
-    image: postgres:latest
+    image: ${DATABASE_IMAGE:-postgres:latest}
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_USER: ${DATABASE_USER:-user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+      POSTGRES_DB: ${DATABASE_NAME:-mydb}
     ports:
       - "5432:5432"
     volumes:

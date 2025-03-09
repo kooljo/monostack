@@ -185,5 +185,31 @@
       "pyside": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install pyside2",
       "beeware": "rm -rf {module} && mkdir {module} && cd {module} && python -m venv venv && source venv/bin/activate && pip install briefcase"
     }
+  },
+  "databases": {
+    "postgres": {
+      "install": "docker run --name postgres -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb -p 5432:5432 -d postgres:latest"
+    },
+    "mysql": {
+      "install": "docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydb -p 3306:3306 -d mysql:latest"
+    },
+    "mongodb": {
+      "install": "docker run --name mongo -p 27017:27017 -d mongo:latest"
+    },
+    "redis": {
+      "install": "docker run --name redis -p 6379:6379 -d redis:latest"
+    },
+    "sqlite": {
+      "install": "echo 'SQLite does not require a running service. The database file is stored locally.'"
+    },
+    "cassandra": {
+      "install": "docker run --name cassandra -p 9042:9042 -d cassandra:latest"
+    },
+    "elasticsearch": {
+      "install": "docker run --name elasticsearch -e discovery.type=single-node -p 9200:9200 -d elasticsearch:latest"
+    },
+    "neo4j": {
+      "install": "docker run --name neo4j -e NEO4J_AUTH=neo4j/password -p 7474:7474 -p 7687:7687 -d neo4j:latest"
+    }
   }
 }

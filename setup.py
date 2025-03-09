@@ -12,53 +12,65 @@ def load_docker_compose_template():
     with open(template_path, "r") as f:
         return f.read()
 
+def color_text(text, color_code):
+    return f"\033[{color_code}m{text}\033[0m"
+
 def prompt_user(technologies):
     user_choices = {}
-    print("\nSelect technologies for each module:")
+    print(color_text("\nSelect the type of application you want to create:", "34"))  # Blue
+    options = ["Mobile_App", "Web_App", "Desktop_App", "All"]
+    app_type = os.popen(f'gum choose {" ".join(options)}').read().strip()
     
-    # Step 1: Choose a backend language
-    backend_languages = list(technologies["backend"].keys())
-    print("\nChoose a backend language:")
-    language_choice = os.popen(f'gum choose {" ".join(backend_languages)}').read().strip()
+    if app_type in ["Mobile_App", "All"]:
+        print(color_text("\nChoose a frontend-mobile language:", "32"))  # Green
+        mobile_languages = list(technologies["frontend-mobile"].keys())
+        mobile_language_choice = os.popen(f'gum choose {" ".join(mobile_languages)}').read().strip()
+        if mobile_language_choice in mobile_languages:
+            mobile_technologies = list(technologies["frontend-mobile"][mobile_language_choice].keys())
+            print(color_text(f"\nChoose a frontend-mobile framework for {mobile_language_choice}:", "32"))
+            mobile_tech_choice = os.popen(f'gum choose {" ".join(mobile_technologies)}').read().strip()
+            user_choices["frontend-mobile"] = {"language": mobile_language_choice, "framework": mobile_tech_choice}
     
-    if language_choice in backend_languages:
-        backend_technologies = list(technologies["backend"][language_choice].keys())
-        print(f"\nChoose a backend framework for {language_choice}:")
-        tech_choice = os.popen(f'gum choose {" ".join(backend_technologies)}').read().strip()
-        user_choices["backend"] = {"language": language_choice, "framework": tech_choice if tech_choice in backend_technologies else backend_technologies[0]}
+    if app_type in ["Web_App", "All"]:
+        print(color_text("\nChoose a frontend-web language:", "36"))  # Cyan
+        web_languages = list(technologies["frontend-web"].keys())
+        web_language_choice = os.popen(f'gum choose {" ".join(web_languages)}').read().strip()
+        if web_language_choice in web_languages:
+            web_technologies = list(technologies["frontend-web"][web_language_choice].keys())
+            print(color_text(f"\nChoose a frontend-web framework for {web_language_choice}:", "36"))
+            web_tech_choice = os.popen(f'gum choose {" ".join(web_technologies)}').read().strip()
+            user_choices["frontend-web"] = {"language": web_language_choice, "framework": web_tech_choice}
     
-    # Step 2: Choose frontend-web language and framework
-    web_languages = list(technologies["frontend-web"].keys())
-    print("\nChoose a frontend-web language:")
-    web_language_choice = os.popen(f'gum choose {" ".join(web_languages)}').read().strip()
+    if app_type in ["Desktop_App", "All"]:
+        print(color_text("\nChoose a frontend-desktop language:", "35"))  # Magenta
+        desktop_languages = list(technologies["frontend-desktop"].keys())
+        desktop_language_choice = os.popen(f'gum choose {" ".join(desktop_languages)}').read().strip()
+        if desktop_language_choice in desktop_languages:
+            desktop_technologies = list(technologies["frontend-desktop"][desktop_language_choice].keys())
+            print(color_text(f"\nChoose a frontend-desktop framework for {desktop_language_choice}:", "35"))
+            desktop_tech_choice = os.popen(f'gum choose {" ".join(desktop_technologies)}').read().strip()
+            user_choices["frontend-desktop"] = {"language": desktop_language_choice, "framework": desktop_tech_choice}
     
-    if web_language_choice in web_languages:
-        web_technologies = list(technologies["frontend-web"][web_language_choice].keys())
-        print(f"\nChoose a frontend-web framework for {web_language_choice}:")
-        web_tech_choice = os.popen(f'gum choose {" ".join(web_technologies)}').read().strip()
-        user_choices["frontend-web"] = {"language": web_language_choice, "framework": web_tech_choice if web_tech_choice in web_technologies else web_technologies[0]}
+    print(color_text("\nDo you want to include a backend?", "33"))  # Yellow
+    backend_choice = os.popen(f'gum choose Yes No').read().strip()
+    if backend_choice == "Yes":
+        print(color_text("\nChoose a backend language:", "33"))
+        backend_languages = list(technologies["backend"].keys())
+        language_choice = os.popen(f'gum choose {" ".join(backend_languages)}').read().strip()
+        if language_choice in backend_languages:
+            backend_technologies = list(technologies["backend"][language_choice].keys())
+            print(color_text(f"\nChoose a backend framework for {language_choice}:", "33"))
+            tech_choice = os.popen(f'gum choose {" ".join(backend_technologies)}').read().strip()
+            user_choices["backend"] = {"language": language_choice, "framework": tech_choice}
     
-    # Step 3: Choose frontend-mobile language and framework
-    mobile_languages = list(technologies["frontend-mobile"].keys())
-    print("\nChoose a frontend-mobile language:")
-    mobile_language_choice = os.popen(f'gum choose {" ".join(mobile_languages)}').read().strip()
-    
-    if mobile_language_choice in mobile_languages:
-        mobile_technologies = list(technologies["frontend-mobile"][mobile_language_choice].keys())
-        print(f"\nChoose a frontend-mobile framework for {mobile_language_choice}:")
-        mobile_tech_choice = os.popen(f'gum choose {" ".join(mobile_technologies)}').read().strip()
-        user_choices["frontend-mobile"] = {"language": mobile_language_choice, "framework": mobile_tech_choice if mobile_tech_choice in mobile_technologies else mobile_technologies[0]}
-    
-    # Step 4: Choose frontend-desktop language and framework
-    desktop_languages = list(technologies["frontend-desktop"].keys())
-    print("\nChoose a frontend-desktop language:")
-    desktop_language_choice = os.popen(f'gum choose {" ".join(desktop_languages)}').read().strip()
-    
-    if desktop_language_choice in desktop_languages:
-        desktop_technologies = list(technologies["frontend-desktop"][desktop_language_choice].keys())
-        print(f"\nChoose a frontend-desktop framework for {desktop_language_choice}:")
-        desktop_tech_choice = os.popen(f'gum choose {" ".join(desktop_technologies)}').read().strip()
-        user_choices["frontend-desktop"] = {"language": desktop_language_choice, "framework": desktop_tech_choice if desktop_tech_choice in desktop_technologies else desktop_technologies[0]}
+    print(color_text("\nDo you want to include a database?", "31"))  # Red
+    db_choice = os.popen(f'gum choose Yes No').read().strip()
+    if db_choice == "Yes":
+        print(color_text("\nChoose a database:", "31"))
+        db_choices = list(technologies["databases"].keys())
+        database_choice = os.popen(f'gum choose {" ".join(db_choices)}').read().strip()
+        if database_choice in db_choices:
+            user_choices["database"] = {"type": database_choice}
     
     return user_choices
 
@@ -72,27 +84,34 @@ def initialize_git_repo(base_dir):
     
     print("✅ Git repository initialized successfully!")
 
+
 def initialize_project(base_dir, module, choice, install_commands):
     project_path = os.path.join(base_dir, module)
-
-    # Assure que le dossier existe avant toute opération
     os.makedirs(project_path, exist_ok=True)
-
+    
+    # Vérifier si language et framework existent dans choice
+    if "language" not in choice or "framework" not in choice:
+        print(f"⚠️ Skipping {module} as no valid choice was made.")
+        return
+    
     language = choice["language"]
     framework = choice["framework"]
-
+    
     if module in install_commands and language in install_commands[module] and framework in install_commands[module][language]:
         install_command = install_commands[module][language][framework].replace("{module}", module)
         print(f"📦 Installing {framework} ({language}) in {module}...")
-        os.system(f"cd {base_dir} && {install_command}")
-
-        # Vérifie après l'installation si le dossier a été bien créé
-        if not os.path.exists(project_path):
-            os.makedirs(project_path, exist_ok=True)
+        exit_code = os.system(f"cd {base_dir} && {install_command}")
+        
+        if exit_code != 0:
+            print(f"❌ Installation failed for {framework} ({language}) in {module}. Skipping...")
+            return
     else:
         print(f"⚠️ No installation command found for {framework} in {language} ({module}). Skipping installation.")
-
-    # Ajoute un README.md dans chaque dossier
+    
+    # Vérifier à nouveau si le dossier existe après installation
+    os.makedirs(project_path, exist_ok=True)
+    
+    # Ajouter un README.md dans chaque dossier
     with open(os.path.join(project_path, "README.md"), "w") as f:
         f.write(f"# {module.capitalize()} - {framework} ({language})\n")
 

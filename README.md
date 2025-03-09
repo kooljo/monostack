@@ -1,7 +1,7 @@
 # **Monostack 🚀**
 
 ## 📌 Overview
-Monostack is a **CLI tool** that helps developers generate a **full-stack project structure** interactively or using default configurations. It supports multiple technologies for **backend, frontend-web, frontend-mobile, and frontend-desktop**, allowing quick setup of a scalable and modular application. It also generates a **docker-compose.yml** file based on the selected technologies.
+Monostack is a **CLI tool** that helps developers generate a **full-stack project structure** interactively or using default configurations. It supports multiple technologies for **backend, frontend-web, frontend-mobile, and frontend-desktop**, allowing quick setup of a scalable and modular application. It also generates a **docker-compose.yml** file based on the selected technologies and provides database integration.
 
 ---
 
@@ -10,7 +10,9 @@ Monostack is a **CLI tool** that helps developers generate a **full-stack projec
 ✅ **Automatic project folder structure generation**  
 ✅ **Custom `docker-compose.yml` generation**  
 ✅ **Automatic installation of selected frameworks**  
+✅ **Database selection and integration**  
 ✅ **Pre-configured documentation (`docs/` and `README.md`)**  
+✅ **Dependency checking before installation (React Native, Node.js, npm, etc.)**  
 
 ---
 
@@ -49,6 +51,16 @@ Monostack is a **CLI tool** that helps developers generate a **full-stack projec
 - **.NET**: WinUI, WPF, MAUI
 - **Python**: PyQt, Kivy, Tkinter, BeeWare
 
+### **Databases**
+- **PostgreSQL**
+- **MySQL**
+- **MongoDB**
+- **Redis**
+- **SQLite**
+- **Cassandra**
+- **Elasticsearch**
+- **Neo4j**
+
 ---
 
 ## 🔥 **Installation & Usage**
@@ -70,7 +82,7 @@ cd monostack
 ```bash
 python setup.py
 ```
-👉 You will be prompted to choose **backend, frontend-web, frontend-mobile, and frontend-desktop** technologies.
+👉 You will be prompted to choose **backend, frontend-web, frontend-mobile, frontend-desktop**, and **database** technologies.
 
 #### 🔹 **Run Services with Docker Compose**
 ```bash
@@ -97,10 +109,11 @@ docker-compose up --build -d
 ---
 
 ## 📌 Roadmap & Future Enhancements
-- [ ] **Automatic database setup (PostgreSQL, MySQL, MongoDB, etc.)**
+- [ ] **Enhanced database management** (automated migrations, backups)
 - [ ] **Integration with Git for automatic repository setup**
 - [ ] **Additional frontend/backend stacks**
 - [ ] **Enhanced CLI options for advanced configurations**
+- [ ] **CI/CD pipeline integration**
 
 ---
 

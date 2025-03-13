@@ -131,6 +131,113 @@ class HelloWorldGenerator:
             self.logger.warning(f"Hello World not supported for Java {framework}")
             return False
             
+    def _generate_spring_boot_hello_world(self, backend_dir: str) -> bool:
+        """Generate Hello World for Spring Boot"""
+        try:
+            # Find the main application class and package structure
+            main_app_file = None
+            package_name = "com.example"
+            
+            for root, dirs, files in os.walk(backend_dir):
+                for file in files:
+                    if file.endswith("Application.java"):
+                        main_app_file = os.path.join(root, file)
+                        rel_path = os.path.relpath(root, backend_dir)
+                        package_name = rel_path.replace(os.path.sep, ".")
+                        if package_name.startswith("src.main.java."):
+                            package_name = package_name[len("src.main.java."):]
+                        break
+                if main_app_file:
+                    break
+            
+            # Create controllers directory if it doesn't exist
+            controller_dir = os.path.join(backend_dir, "src", "main", "java", *package_name.split("."), "controllers")
+            os.makedirs(controller_dir, exist_ok=True)
+            
+            # Create HelloWorldController.java
+            controller_file = os.path.join(controller_dir, "HelloWorldController.java")
+            controller_content = f"""package {package_name}.controllers;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@CrossOrigin(origins = "*")
+public class HelloWorldController {{
+
+    @GetMapping("/hello")
+    public Map<String, String> helloWorld() {{
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello, World!");
+        return response;
+    }}
+}}
+"""
+            with open(controller_file, 'w') as f:
+                f.write(controller_content)
+            
+            # Update pom.xml to ensure web dependency
+            pom_file = os.path.join(backend_dir, "pom.xml")
+            if os.path.exists(pom_file):
+                with open(pom_file, 'r') as f:
+                    pom_content = f.read()
+                    
+                # Check if spring-boot-starter-web dependency is already included
+                if "<artifactId>spring-boot-starter-web</artifactId>" not in pom_content:
+                    # Add web dependency if not present
+                    if "<dependencies>" in pom_content:
+                        web_dependency = """
+        <!-- Spring Web Dependency -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>"""
+                        pom_content = pom_content.replace("<dependencies>", f"<dependencies>{web_dependency}")
+                        
+                        with open(pom_file, 'w') as f:
+                            f.write(pom_content)
+            
+            # Create README for Hello World API
+            readme_file = os.path.join(backend_dir, "HELLO_WORLD_README.md")
+            readme_content = """# Spring Boot Hello World API
+
+This project includes a simple Hello World REST API endpoint.
+
+## Endpoint
+
+- **URL**: `/hello`
+- **Method**: `GET`
+- **Response**: `{"message": "Hello, World!"}`
+
+## Running the Application
+
+1. Navigate to the backend directory
+2. Run `mvn spring-boot:run`
+3. Access the API at http://localhost:8080/hello
+
+## Testing with cURL
+
+```bash
+curl http://localhost:8080/hello
+```
+
+## CORS Configuration
+
+CORS is enabled for all origins to allow frontend applications to connect to this API.
+"""
+            with open(readme_file, 'w') as f:
+                f.write(readme_content)
+                
+            self.logger.info(f"Generated Spring Boot Hello World endpoint in {controller_file}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error generating Spring Boot Hello World: {str(e)}")
+            return False
+            
     def _generate_go_backend(self, backend_dir: str, framework: str) -> bool:
         """Generate Hello World for Go backends"""
         if framework == "gin":

@@ -31,22 +31,35 @@ class TemplateManager:
             Rendered command string
         """
         try:
-            # Check if there are any old-style {module} format templates
-            if "{module}" in command_template:
-                # Manual replacement for old-style format
-                rendered_command = command_template.replace("{module}", variables.get("module", ""))
-                self.logger.debug(f"Using old-style replacement: {rendered_command}")
-            else:
-                # Use Template for ${module} style replacement
-                template = Template(command_template)
-                rendered_command = template.safe_substitute(variables)
-                self.logger.debug(f"Using Template replacement: {rendered_command}")
+            module_value = variables.get("module", "")
+            
+            # Direct replacement - simplest and most reliable approach
+            rendered_command = command_template
+            
+            # Replace all variable patterns we might encounter
+            replacements = [
+                ("${module}", module_value),  # Standard shell variable
+                ("$${module}", module_value),  # Escaped shell variable
+                ("{module}", module_value),    # Python format string
+                ("$module", module_value),     # Plain shell variable
+            ]
+            
+            for pattern, replacement in replacements:
+                rendered_command = rendered_command.replace(pattern, replacement)
+            
+            self.logger.debug(f"Rendered command after direct replacements: {rendered_command}")
             
             # Double-check that all variables were replaced
-            if "${module}" in rendered_command or "{module}" in rendered_command:
-                self.logger.warning(f"Variable replacement may not have worked correctly: {rendered_command}")
-                # Final fallback with direct replacement
-                rendered_command = rendered_command.replace("${module}", variables.get("module", "")).replace("{module}", variables.get("module", ""))
+            if any(pattern in rendered_command for pattern, _ in replacements):
+                self.logger.warning(f"Some variables may not have been replaced: {rendered_command}")
+                
+                # Final attempt with string.Template
+                try:
+                    template = Template(rendered_command)
+                    rendered_command = template.safe_substitute(variables)
+                    self.logger.debug(f"After Template safe_substitute: {rendered_command}")
+                except Exception as e:
+                    self.logger.error(f"Template substitution failed: {e}")
                 
             self.logger.debug(f"Final rendered command: {rendered_command}")
             return rendered_command

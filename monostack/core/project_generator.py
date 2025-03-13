@@ -60,11 +60,13 @@ class ProjectGenerator:
                 # Render the installation command with variables
                 install_command = self.template_manager.render_install_command(command_template, variables)
                 
-                # Verify the variables were correctly replaced
-                if "${module}" in install_command or "{module}" in install_command:
+                # Verify all possible variable patterns were correctly replaced
+                patterns_to_check = ["${module}", "$${module}", "{module}", "$module"]
+                if any(pattern in install_command for pattern in patterns_to_check):
                     self.logger.warning(f"Variable replacement may have failed in command: {install_command}")
                     # Direct replacement as last resort
-                    install_command = install_command.replace("${module}", module).replace("{module}", module)
+                    for pattern in patterns_to_check:
+                        install_command = install_command.replace(pattern, module)
                 
                 self.logger.info(f"Installing {framework} ({language}) in {module}...")
                 result = self.command_runner.run(install_command, cwd=base_dir)

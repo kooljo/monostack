@@ -128,7 +128,7 @@
   },
   "frontend-mobile": {
     "javascript": {
-      "react-native": "rm -rf ${module} && npx --yes @react-native-community/cli init ${module}",
+      "react-native": "VALID_NAME=$(echo ${module} | tr '-' '_') && rm -rf ${module} ${VALID_NAME} && npx --yes @react-native-community/cli init ${VALID_NAME} && mv ${VALID_NAME} ${module}_temp && mkdir -p ${module} && mv ${module}_temp/* ${module}/ && rm -rf ${module}_temp",
       "expo": "rm -rf ${module} && npx --yes create-expo-app ${module}",
       "ionic": "rm -rf ${module} && npm install -g @ionic/cli && ionic start ${module} blank",
       "capacitor": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install @capacitor/core",

@@ -1,20 +1,27 @@
 import os
-import sys
 import argparse
-from monostack.utils.logger import setup_logging
-from monostack.config.config_manager import ConfigManager
-from monostack.core.project_generator import ProjectGenerator
-from monostack.core.user_interface import UserInterface
+import logging
+import sys
+from typing import Dict, Any, Optional
 
-def main():
-    """Main entry point for the Monostack CLI tool."""
-    # Parse command line arguments
+from .config.config_manager import ConfigManager
+from .core.project_generator import ProjectGenerator
+from .core.user_interface import UserInterface
+from .utils.logger import setup_logging
+
+def parse_arguments():
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Monostack - CLI tool for generating full-stack projects")
     parser.add_argument("--name", type=str, help="Set the project name (default: mono-app)")
     parser.add_argument("--log-level", type=str, choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
                         default="INFO", help="Set the logging level")
     parser.add_argument("--log-file", type=str, help="Path to log file")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+def main():
+    """Main entry point for the application."""
+    # Parse command line arguments
+    args = parse_arguments()
     
     # Setup logging
     logger = setup_logging(args.log_level, args.log_file)

@@ -13,16 +13,16 @@
       "blade": "rm -rf ${module} && mvn archetype:generate -DgroupId=com.example -DartifactId=${module} -DarchetypeArtifactId=blade-archetype"
     },
     "javascript": {
-      "nestjs": "rm -rf ${module} && npx @nestjs/cli new ${module} --skip-git",
+      "nestjs": "rm -rf ${module} && npx --yes @nestjs/cli new ${module} --skip-git",
       "express": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install express",
       "hapi": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install @hapi/hapi",
-      "sails": "rm -rf ${module} && npx sails new ${module}",
-      "loopback": "rm -rf ${module} && npx loopback-cli app ${module}",
-      "adonis": "rm -rf ${module} && npx @adonisjs/cli new ${module} --api-only",
+      "sails": "rm -rf ${module} && npx --yes sails new ${module}",
+      "loopback": "rm -rf ${module} && npx --yes loopback-cli app ${module}",
+      "adonis": "rm -rf ${module} && npx --yes @adonisjs/cli new ${module} --api-only",
       "fastify": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install fastify",
-      "blitzjs": "rm -rf ${module} && npx blitz new ${module}",
-      "keystone": "rm -rf ${module} && npx create-keystone-app ${module}",
-      "strapi": "rm -rf ${module} && npx create-strapi-app ${module} --quickstart"
+      "blitzjs": "rm -rf ${module} && npx --yes blitz new ${module}",
+      "keystone": "rm -rf ${module} && npx --yes create-keystone-app ${module}",
+      "strapi": "rm -rf ${module} && npx --yes create-strapi-app ${module} --quickstart"
     },
     "php": {
       "laravel": "rm -rf ${module} && composer create-project --prefer-dist laravel/laravel ${module}",
@@ -94,14 +94,14 @@
   },
   "frontend-web": {
     "javascript": {
-      "react": "rm -rf ${module} && npx create-react-app ${module} --template typescript",
-      "nextjs": "rm -rf ${module} && npx create-next-app@latest ${module} --ts --use-npm",
+      "react": "rm -rf ${module} && npx --yes create-react-app ${module} --template typescript",
+      "nextjs": "rm -rf ${module} && npx --yes create-next-app@latest ${module} --ts --use-npm",
       "vuejs": "rm -rf ${module} && npm create vue@latest ${module}",
-      "angular": "rm -rf ${module} && npx @angular/cli new ${module} --defaults",
+      "angular": "rm -rf ${module} && npx --yes @angular/cli new ${module} --defaults",
       "svelte": "rm -rf ${module} && npx degit sveltejs/template ${module} && cd ${module} && npm install",
       "solidjs": "rm -rf ${module} && npx degit solidjs/templates/js ${module} && cd ${module} && npm install",
-      "ember": "rm -rf ${module} && npx ember-cli new ${module} --skip-npm",
-      "preact": "rm -rf ${module} && npx preact-cli create default ${module}",
+      "ember": "rm -rf ${module} && npx --yes ember-cli new ${module} --skip-npm",
+      "preact": "rm -rf ${module} && npx --yes preact-cli create default ${module}",
       "alpinejs": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install alpinejs"
     },
     "python": {
@@ -128,12 +128,12 @@
   },
   "frontend-mobile": {
     "javascript": {
-      "react-native": "rm -rf ${module} && npx @react-native-community/cli init ${module}",
-      "expo": "rm -rf ${module} && npx create-expo-app ${module}",
+      "react-native": "rm -rf ${module} && npx --yes @react-native-community/cli init ${module}",
+      "expo": "rm -rf ${module} && npx --yes create-expo-app ${module}",
       "ionic": "rm -rf ${module} && npm install -g @ionic/cli && ionic start ${module} blank",
       "capacitor": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install @capacitor/core",
       "cordova": "rm -rf ${module} && mkdir ${module} && cd ${module} && cordova create ${module}",
-      "nativescript": "rm -rf ${module} && npx create-nx-workspace ${module}",
+      "nativescript": "rm -rf ${module} && npx --yes create-nx-workspace ${module}",
       "quasar": "rm -rf ${module} && npm create quasar ${module}"
     },
     "dart": {
@@ -157,10 +157,10 @@
   },
   "frontend-desktop": {
     "javascript": {
-      "electron": "rm -rf ${module} && npx create-electron-app ${module}",
+      "electron": "rm -rf ${module} && npx --yes create-electron-app ${module}",
       "tauri": "rm -rf ${module} && cargo install create-tauri-app && create-tauri-app ${module}",
-      "neutralino": "rm -rf ${module} && npx @neutralinojs/neu create ${module}",
-      "proton-native": "rm -rf ${module} && npx create-proton-native-app ${module}",
+      "neutralino": "rm -rf ${module} && npx --yes @neutralinojs/neu create ${module}",
+      "proton-native": "rm -rf ${module} && npx --yes create-proton-native-app ${module}",
       "nw.js": "rm -rf ${module} && mkdir ${module} && cd ${module} && npm init -y && npm install nw"
     },
     "dart": {

@@ -4,6 +4,7 @@
 - Run main script: `python monostack.py`
 - Run with project name: `python monostack.py --name myproject`
 - Run with Hello World examples: `python monostack.py --generate-hello-world`
+- Run with verbose output: `python monostack.py -v` or `python monostack.py --verbose`
 - Run with logging: `python monostack.py --log-level DEBUG --log-file monostack.log`
 - Run all tests: `python -m unittest test_setup.py`
 - Run specific test: `python -m unittest test_setup.TestMonostack.test_load_technologies`

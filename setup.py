@@ -16,6 +16,8 @@ def main():
     parser.add_argument("--log-file", type=str, help="Path to log file")
     parser.add_argument("--generate-hello-world", action="store_true",
                         help="Generate Hello World endpoints in backend and corresponding frontend code")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="Show verbose output during command execution")
     args = parser.parse_args()
     
     # Setup logging
@@ -40,7 +42,8 @@ def main():
             success = project_generator.create_project_structure(
                 base_dir, 
                 user_choices,
-                generate_hello_world=args.generate_hello_world
+                generate_hello_world=args.generate_hello_world,
+                verbose=args.verbose
             )
             
             if success:

@@ -24,7 +24,7 @@ class ProjectGenerator:
         self.hello_world_generator = HelloWorldGenerator()
     
     def initialize_project(self, base_dir: str, module: str, choice: Dict[str, Any], 
-                          install_commands: Dict[str, Any]) -> bool:
+                          install_commands: Dict[str, Any], verbose: bool = False) -> bool:
         """
         Initialize a specific module (backend, frontend-web, etc.) in the project.
         
@@ -69,7 +69,7 @@ class ProjectGenerator:
                         install_command = install_command.replace(pattern, module)
                 
                 self.logger.info(f"Installing {framework} ({language}) in {module}...")
-                result = self.command_runner.run(install_command, cwd=base_dir)
+                result = self.command_runner.run(install_command, cwd=base_dir, show_output=verbose)
                 
                 if result.returncode != 0:
                     self.logger.error(f"Installation failed for {framework} ({language}) in {module}.")
@@ -129,7 +129,7 @@ class ProjectGenerator:
             self.logger.error(f"Error generating Docker Compose file: {str(e)}")
             return False
     
-    def initialize_git_repo(self, base_dir: str) -> bool:
+    def initialize_git_repo(self, base_dir: str, verbose: bool = False) -> bool:
         """
         Initialize a Git repository in the project directory.
         
@@ -143,13 +143,13 @@ class ProjectGenerator:
             self.logger.info("Initializing Git repository...")
             
             # Initialize Git repository
-            git_init = self.command_runner.run("git init", cwd=base_dir)
+            git_init = self.command_runner.run("git init", cwd=base_dir, show_output=verbose)
             if git_init.returncode != 0:
                 self.logger.error("Failed to initialize Git repository")
                 return False
                 
             # Add all files to Git
-            git_add = self.command_runner.run("git add .", cwd=base_dir)
+            git_add = self.command_runner.run("git add .", cwd=base_dir, show_output=verbose)
             if git_add.returncode != 0:
                 self.logger.error("Failed to add files to Git repository")
                 return False
@@ -157,7 +157,8 @@ class ProjectGenerator:
             # Create initial commit
             git_commit = self.command_runner.run(
                 'git commit -m "Initial commit with project structure"', 
-                cwd=base_dir
+                cwd=base_dir,
+                show_output=verbose
             )
             if git_commit.returncode != 0:
                 self.logger.error("Failed to create initial commit")
@@ -171,7 +172,7 @@ class ProjectGenerator:
             return False
     
     def create_project_structure(self, base_dir: str, choices: Dict[str, Any], 
-                              generate_hello_world: bool = False) -> bool:
+                              generate_hello_world: bool = False, verbose: bool = False) -> bool:
         """
         Create the entire project structure based on user choices.
         
@@ -195,7 +196,7 @@ class ProjectGenerator:
             # Initialize each module
             for module, choice in choices.items():
                 if module != "database":  # Handle database separately
-                    success = self.initialize_project(base_dir, module, choice, install_commands)
+                    success = self.initialize_project(base_dir, module, choice, install_commands, verbose=verbose)
                     if not success:
                         self.logger.warning(f"Failed to initialize {module}, continuing with other modules")
             
@@ -298,7 +299,7 @@ class ProjectGenerator:
                     f.write("See the respective README files in each component directory for more details on how to run the example.\n")
             
             # Initialize Git repository
-            self.initialize_git_repo(base_dir)
+            self.initialize_git_repo(base_dir, verbose=verbose)
             
             self.logger.info(f"Project structure created successfully at {base_dir}")
             return True

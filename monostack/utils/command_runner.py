@@ -57,15 +57,18 @@ class CommandRunner:
                 # Print output in real-time
                 print("\n--- Command Output ---")
                 for line in process.stdout:
-                    print(line, end='')
+                    print(f">> {line}", end='')  # Add prefix for better visibility
                     stdout.append(line)
                 
                 # Get the return code
                 process.wait()
                 
                 # Collect any stderr after process completion
-                for line in process.stderr:
-                    stderr.append(line)
+                if process.stderr:
+                    print("\n--- Error Output ---")
+                    for line in process.stderr:
+                        print(f"!! {line}", end='')  # Add prefix for errors
+                        stderr.append(line)
                 
                 # Create a CompletedProcess-like object
                 class CustomCompletedProcess:

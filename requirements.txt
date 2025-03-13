@@ -6,4 +6,5 @@ colorama>=0.4.4
 virtualenv>=20.13.0
 pytest>=7.0.0
 pytest-cov>=3.0.0
-logging>=0.4.9
+flask>=2.0.0
+flask-cors>=3.0.0

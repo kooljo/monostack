@@ -31,9 +31,24 @@ class TemplateManager:
             Rendered command string
         """
         try:
-            template = Template(command_template)
-            rendered_command = template.safe_substitute(variables)
-            self.logger.debug(f"Rendered command: {rendered_command}")
+            # Check if there are any old-style {module} format templates
+            if "{module}" in command_template:
+                # Manual replacement for old-style format
+                rendered_command = command_template.replace("{module}", variables.get("module", ""))
+                self.logger.debug(f"Using old-style replacement: {rendered_command}")
+            else:
+                # Use Template for ${module} style replacement
+                template = Template(command_template)
+                rendered_command = template.safe_substitute(variables)
+                self.logger.debug(f"Using Template replacement: {rendered_command}")
+            
+            # Double-check that all variables were replaced
+            if "${module}" in rendered_command or "{module}" in rendered_command:
+                self.logger.warning(f"Variable replacement may not have worked correctly: {rendered_command}")
+                # Final fallback with direct replacement
+                rendered_command = rendered_command.replace("${module}", variables.get("module", "")).replace("{module}", variables.get("module", ""))
+                
+            self.logger.debug(f"Final rendered command: {rendered_command}")
             return rendered_command
         except KeyError as e:
             self.logger.error(f"Missing required variable in template: {e}")

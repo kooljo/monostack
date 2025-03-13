@@ -13,7 +13,8 @@ class CommandRunner:
         self.logger = logging.getLogger(__name__)
     
     def run(self, command: str, cwd: Optional[str] = None, env: Optional[Dict[str, str]] = None,
-            timeout: Optional[int] = None, check: bool = True) -> subprocess.CompletedProcess:
+            timeout: Optional[int] = None, check: bool = True, 
+            show_output: bool = True) -> subprocess.CompletedProcess:
         """
         Run a shell command with subprocess and handle errors appropriately.
         
@@ -23,6 +24,7 @@ class CommandRunner:
             env: Environment variables for the command
             timeout: Timeout in seconds for the command
             check: Whether to raise an exception if the command fails
+            show_output: Whether to show output in real-time (for long-running commands)
             
         Returns:
             CompletedProcess instance with return code and output
@@ -33,23 +35,74 @@ class CommandRunner:
         """
         try:
             self.logger.info(f"Running command: {command}")
-            result = subprocess.run(
-                command, 
-                shell=True, 
-                check=check, 
-                cwd=cwd, 
-                env=env, 
-                timeout=timeout,
-                text=True,
-                capture_output=True
-            )
+            print(f"\n⚙️  Executing: {command}")
+            
+            if show_output:
+                # Run with real-time output
+                process = subprocess.Popen(
+                    command,
+                    shell=True,
+                    cwd=cwd,
+                    env=env,
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    bufsize=1,
+                    universal_newlines=True
+                )
+                
+                stdout = []
+                stderr = []
+                
+                # Print output in real-time
+                print("\n--- Command Output ---")
+                for line in process.stdout:
+                    print(line, end='')
+                    stdout.append(line)
+                
+                # Get the return code
+                process.wait()
+                
+                # Collect any stderr after process completion
+                for line in process.stderr:
+                    stderr.append(line)
+                
+                # Create a CompletedProcess-like object
+                class CustomCompletedProcess:
+                    def __init__(self, returncode, stdout, stderr):
+                        self.returncode = returncode
+                        self.stdout = ''.join(stdout)
+                        self.stderr = ''.join(stderr)
+                
+                result = CustomCompletedProcess(process.returncode, ''.join(stdout), ''.join(stderr))
+                
+                if check and result.returncode != 0:
+                    raise subprocess.CalledProcessError(result.returncode, command, 
+                                                       result.stdout, result.stderr)
+            else:
+                # Use standard run for simple commands
+                result = subprocess.run(
+                    command, 
+                    shell=True, 
+                    check=check, 
+                    cwd=cwd, 
+                    env=env, 
+                    timeout=timeout,
+                    text=True,
+                    capture_output=True
+                )
+            
+            # Log results
             if result.returncode == 0:
+                print(f"\n✅ Command completed successfully")
                 self.logger.debug(f"Command completed successfully: {command}")
-                if result.stdout:
+                if result.stdout and not show_output:
                     self.logger.debug(f"Command output: {result.stdout}")
             else:
+                print(f"\n❌ Command failed with exit code {result.returncode}")
                 self.logger.warning(f"Command returned non-zero exit code {result.returncode}: {command}")
-                if result.stderr:
+                if result.stderr and not show_output:
+                    print(f"Error: {result.stderr}")
                     self.logger.warning(f"Command error output: {result.stderr}")
             
             return result

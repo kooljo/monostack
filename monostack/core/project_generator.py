@@ -7,6 +7,7 @@ from ..config.config_manager import ConfigManager
 from ..utils.command_runner import CommandRunner
 from ..utils.venv_manager import VenvManager
 from ..templates.template_manager import TemplateManager
+from ..templates.hello_world import HelloWorldGenerator
 
 class ProjectGenerator:
     """
@@ -20,6 +21,7 @@ class ProjectGenerator:
         self.command_runner = CommandRunner()
         self.venv_manager = VenvManager()
         self.template_manager = TemplateManager()
+        self.hello_world_generator = HelloWorldGenerator()
     
     def initialize_project(self, base_dir: str, module: str, choice: Dict[str, Any], 
                           install_commands: Dict[str, Any]) -> bool:
@@ -160,13 +162,15 @@ class ProjectGenerator:
             self.logger.error(f"Error initializing Git repository: {str(e)}")
             return False
     
-    def create_project_structure(self, base_dir: str, choices: Dict[str, Any]) -> bool:
+    def create_project_structure(self, base_dir: str, choices: Dict[str, Any], 
+                              generate_hello_world: bool = False) -> bool:
         """
         Create the entire project structure based on user choices.
         
         Args:
             base_dir: The base directory for the project
             choices: User's technology choices
+            generate_hello_world: Whether to generate Hello World examples
             
         Returns:
             True if successful, False otherwise
@@ -190,6 +194,29 @@ class ProjectGenerator:
             # Generate Docker Compose file
             self.generate_docker_compose(base_dir, choices)
             
+            # Generate Hello World examples if requested
+            if generate_hello_world and "backend" in choices:
+                self.logger.info("Generating Hello World examples...")
+                backend_language = choices["backend"]["language"]
+                backend_framework = choices["backend"]["framework"]
+                
+                # Generate backend Hello World endpoint
+                self.hello_world_generator.generate_backend(
+                    base_dir, backend_language, backend_framework
+                )
+                
+                # Generate frontend Hello World components
+                frontend_modules = ["frontend-web", "frontend-mobile", "frontend-desktop"]
+                for module in frontend_modules:
+                    if module in choices:
+                        frontend_language = choices[module]["language"]
+                        frontend_framework = choices[module]["framework"]
+                        
+                        self.hello_world_generator.generate_frontend(
+                            base_dir, module, frontend_language, frontend_framework,
+                            backend_language, backend_framework
+                        )
+            
             # Create docs directory
             docs_path = os.path.join(base_dir, "docs")
             os.makedirs(docs_path, exist_ok=True)
@@ -209,6 +236,16 @@ class ProjectGenerator:
                 f.write("├── 📁 docs\n")
                 f.write("└── 📜 README.md\n")
                 f.write("```\n")
+                
+                if generate_hello_world and "backend" in choices:
+                    f.write("\n## Hello World Example\n\n")
+                    f.write("This project includes a Hello World example that demonstrates communication between the backend and frontend(s).\n\n")
+                    f.write("- The backend exposes a `/hello` endpoint that returns a JSON message.\n")
+                    f.write("- The frontend(s) fetch and display this message.\n\n")
+                    f.write("To test this example:\n\n")
+                    f.write("1. Start the backend server\n")
+                    f.write("2. Launch the frontend application(s)\n")
+                    f.write("3. The frontend will display the message from the backend\n")
             
             # Create main README
             with open(os.path.join(base_dir, "README.md"), "w") as f:
@@ -230,6 +267,27 @@ class ProjectGenerator:
                 f.write("cd infra\n")
                 f.write("docker-compose up --build -d\n")
                 f.write("```\n")
+                
+                if generate_hello_world and "backend" in choices:
+                    f.write("\n## Hello World Example\n\n")
+                    backend_framework = choices["backend"]["framework"]
+                    f.write(f"This project includes a Hello World example that demonstrates communication between the {backend_framework} backend and ")
+                    
+                    frontends = []
+                    for module in ["frontend-web", "frontend-mobile", "frontend-desktop"]:
+                        if module in choices:
+                            frontends.append(f"{choices[module]['framework']} ({module.replace('frontend-', '')})")
+                    
+                    if frontends:
+                        if len(frontends) == 1:
+                            f.write(f"the {frontends[0]} frontend.\n\n")
+                        else:
+                            f.write("the following frontends:\n\n")
+                            for frontend in frontends:
+                                f.write(f"- {frontend}\n")
+                            f.write("\n")
+                    
+                    f.write("See the respective README files in each component directory for more details on how to run the example.\n")
             
             # Initialize Git repository
             self.initialize_git_repo(base_dir)

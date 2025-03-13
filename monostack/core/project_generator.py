@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional
 from ..config.config_manager import ConfigManager
 from ..utils.command_runner import CommandRunner
 from ..utils.venv_manager import VenvManager
+from ..utils.gitignore_generator import GitignoreGenerator
 from ..templates.template_manager import TemplateManager
 from ..templates.hello_world import HelloWorldGenerator
 
@@ -22,6 +23,7 @@ class ProjectGenerator:
         self.venv_manager = VenvManager()
         self.template_manager = TemplateManager()
         self.hello_world_generator = HelloWorldGenerator()
+        self.gitignore_generator = GitignoreGenerator()
     
     def initialize_project(self, base_dir: str, module: str, choice: Dict[str, Any], 
                           install_commands: Dict[str, Any], verbose: bool = False) -> bool:
@@ -90,6 +92,9 @@ class ProjectGenerator:
                 f.write(f"This directory contains the {module} part of the project using {framework} ({language}).\n")
                 f.write("\n## Setup\n\n")
                 f.write("Instructions for setting up this component...\n")
+            
+            # Add appropriate .gitignore file
+            self.gitignore_generator.add_gitignore(project_path, module, language, framework)
             
             return True
             
@@ -297,6 +302,9 @@ class ProjectGenerator:
                             f.write("\n")
                     
                     f.write("See the respective README files in each component directory for more details on how to run the example.\n")
+            
+            # Add root .gitignore file
+            self.gitignore_generator.add_root_gitignore(base_dir, choices)
             
             # Initialize Git repository
             self.initialize_git_repo(base_dir, verbose=verbose)

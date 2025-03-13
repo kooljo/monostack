@@ -12,7 +12,10 @@ Monostack is a **CLI tool** that helps developers generate a **full-stack projec
 ✅ **Automatic installation of selected frameworks**  
 ✅ **Database selection and integration**  
 ✅ **Pre-configured documentation (`docs/` and `README.md`)**  
-✅ **Dependency checking before installation (React Native, Node.js, npm, etc.)**  
+✅ **Hello World examples with communication between backend and frontend**  
+✅ **Framework-specific `.gitignore` files for each component**  
+✅ **Automatic Git repository initialization**  
+✅ **Dependency checking before installation**  
 
 ---
 
@@ -69,7 +72,6 @@ Ensure you have the following installed:
 - **Python 3+**
 - **Git**
 - **Docker & Docker Compose**
-- **Gum** (for CLI interactive selection)
 
 ### **Clone the repository**
 ```bash
@@ -77,12 +79,37 @@ git clone https://github.com/kooljo/monostack
 cd monostack
 ```
 
-### **Run the CLI tool**
-#### 🔹 **Interactive Mode (Manual Selection)**
+### **Install dependencies**
 ```bash
-python setup.py
+pip install -r requirements.txt
+```
+
+### **Run the CLI tool**
+#### 🔹 **Basic Usage**
+```bash
+python monostack.py
 ```
 👉 You will be prompted to choose **backend, frontend-web, frontend-mobile, frontend-desktop**, and **database** technologies.
+
+#### 🔹 **With Hello World Example**
+```bash
+python monostack.py --generate-hello-world
+```
+This will generate example code with a backend API endpoint and frontend components that communicate with it.
+
+#### 🔹 **With Custom Project Name**
+```bash
+python monostack.py --name my-awesome-project
+```
+
+#### 🔹 **With Verbose Output**
+```bash
+python monostack.py -v
+```
+or
+```bash
+python monostack.py --verbose
+```
 
 #### 🔹 **Run Services with Docker Compose**
 ```bash
@@ -103,17 +130,42 @@ docker-compose up --build -d
 │   ├── docker-compose.yml
 │   └── ...
 ├── 📁 docs             # Project documentation
-└── 📜 README.md
+├── 📜 .gitignore       # Project-wide gitignore file
+└── 📜 README.md        # Project documentation
+```
+
+### **Hello World Example**
+When created with the `--generate-hello-world` flag, the project will include:
+
+- **Backend**: An API endpoint at `/hello` that returns a JSON response
+- **Frontend**: Components that fetch and display data from the backend API
+- **Documentation**: Instructions for running and testing the example
+
+---
+
+## 📌 Command Line Options
+```
+Options:
+  --name NAME            Set the project name (default: mono-app)
+  --log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+                        Set the logging level
+  --log-file LOG_FILE    Path to log file
+  --generate-hello-world
+                        Generate Hello World endpoints in backend and corresponding frontend code
+  -v, --verbose         Show verbose output during command execution
 ```
 
 ---
 
 ## 📌 Roadmap & Future Enhancements
 - [ ] **Enhanced database management** (automated migrations, backups)
-- [ ] **Integration with Git for automatic repository setup**
-- [ ] **Additional frontend/backend stacks**
-- [ ] **Enhanced CLI options for advanced configurations**
 - [ ] **CI/CD pipeline integration**
+- [ ] **Project templates for specific use cases**
+- [ ] **Kubernetes deployment configurations**
+- [ ] **More Hello World examples for different frameworks**
+- [x] **Integration with Git for automatic repository setup**
+- [x] **Additional frontend/backend stacks**
+- [x] **Enhanced CLI options for advanced configurations**
 
 ---
 
